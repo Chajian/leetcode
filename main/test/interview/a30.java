@@ -31,17 +31,17 @@ public class a30 {
                     for(int t = i ; t < j ; t+=wordlen){
                         String st = s.substring(t,t+wordlen);
                         if(!map.containsKey(st)){
-                            i=t;
+
                             break;
                         }
                         temp.put(st,temp.getOrDefault(st,0)+1);
                     }
                     if(temp.equals(map)) {
                         list.add(i);
-                        temp.clear();
                     }
                 }
-                String st = s.substring(left,i++);
+                temp.clear();
+                String st = s.substring(left,++i);
                 tempNums-=StringtoLongByAdd(nums,st);
                 left = i;
             }
@@ -73,6 +73,6 @@ public class a30 {
 
     @Test
     public void test(){
-        System.out.println(Arrays.toString(findSubstring("aaaaaaaaaaaaaa",new String[]{"aa","aa"}).toArray()));
+        System.out.println(Arrays.toString(findSubstring("sheateateseatea",new String[]{"sea","tea","ate"}).toArray()));
     }
 }
