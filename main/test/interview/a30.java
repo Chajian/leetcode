@@ -20,7 +20,7 @@ public class a30 {
             wordsBuilder.append(s1);
         }
         long wordsNum = StringtoLongByAdd(nums,wordsBuilder.toString());
-        int i = 0,left = i,j=0,wordlen = words[0].length(),wordslen = wordlen*words.length;
+        int i = 0,t=i,left = i,j=0,wordlen = words[0].length(),wordslen = wordlen*words.length;
         HashMap<String,Integer> temp = new HashMap<>();
         long tempNums = 0;
         while(i<=s.length()-wordslen) {
@@ -28,19 +28,20 @@ public class a30 {
                 tempNums += nums.get(s.charAt(j++)-'a');
             else{
                 if(tempNums==wordsNum){
-                    for(int t = i ; t < j ; t+=wordlen){
+                    for(t = i ; t < j ; t+=wordlen){
                         String st = s.substring(t,t+wordlen);
                         if(!map.containsKey(st)){
-
                             break;
                         }
                         temp.put(st,temp.getOrDefault(st,0)+1);
                     }
                     if(temp.equals(map)) {
                         list.add(i);
+                        if(map.keySet().size()>1)
+                            i+=wordlen-1;
                     }
+                    temp.clear();
                 }
-                temp.clear();
                 String st = s.substring(left,++i);
                 tempNums-=StringtoLongByAdd(nums,st);
                 left = i;
@@ -73,6 +74,6 @@ public class a30 {
 
     @Test
     public void test(){
-        System.out.println(Arrays.toString(findSubstring("sheateateseatea",new String[]{"sea","tea","ate"}).toArray()));
+        System.out.println(Arrays.toString(findSubstring("abaababbaba",new String[]{"ab","ba","ab","ba"}).toArray()));
     }
 }
