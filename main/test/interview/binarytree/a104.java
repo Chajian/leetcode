@@ -1,6 +1,9 @@
 package interview.binarytree;
 
 
+/**
+ * way: recursiveness
+ */
 public class a104 {
     public int maxDepth(TreeNode root) {
         if(root==null)return 0;
