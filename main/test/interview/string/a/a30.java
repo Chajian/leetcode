@@ -1,4 +1,4 @@
-package interview;
+package interview.string.a;
 
 import org.junit.Test;
 import tools.Prime;

@@ -1,4 +1,4 @@
-package interview.b;
+package interview.string.b;
 
 import org.junit.Test;
 
