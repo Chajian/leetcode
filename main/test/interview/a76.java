@@ -3,14 +3,16 @@ package interview;
 import org.junit.Test;
 
 public class a76 {
+
+    int[] tempMap,map;
     public String minWindow(String s, String t) {
-        int[] map = new int[90];
+        map = new int[128];
         char[] chars = s.toCharArray();
         for(char c:t.toCharArray()){
-            map[c-'A'] +=1;
+            map[c] +=1;
         }
         int i = 0,j=0,resultLeft = -1,resultRight = 999999;
-        int[] tempMap = new int[map.length];
+        tempMap = new int[map.length];
         boolean flag = false;
         while(flag||j<s.length()){
             if(flag){
@@ -19,18 +21,16 @@ public class a76 {
                     resultRight = j;
                 }
                 char cc = chars[i++];
-                tempMap[cc-'A']-=1;
-                if(map[cc-'A']>tempMap[cc-'A'])
+                tempMap[cc]-=1;
+                if(map[cc]>tempMap[cc])
                     flag = false;
             }
-            else{
-                if(j<s.length()){
+            else if(j<s.length()){
                     char c = chars[j++];
-                    tempMap[c - 'A'] += 1;
-                    if(compare(map,tempMap)) {
+                    tempMap[c] += 1;
+                    if(map[c]!=0&&compare()) {
                         flag = true;
                     }
-                }
             }
         }
         resultLeft = resultLeft==-1?0:resultLeft;
@@ -38,9 +38,9 @@ public class a76 {
         return s.substring(resultLeft,resultRight);
     }
 
-    public boolean compare(int[] t,int[] s){
-        for(int i = 0 ; i < s.length ;i++){
-            if(t[i]>s[i])
+    public boolean compare(){
+        for(byte i = 0 ; i < tempMap.length ;i++){
+            if(map[i]>tempMap[i])
                 return false;
         }
         return true;
@@ -48,7 +48,8 @@ public class a76 {
 
     @Test
     public void test(){
-        System.out.println(minWindow("aa","a"));
+        System.out.println(minWindow("aasdfzxcvAZAZ","AzZa"));
+//        System.out.println('z'-'A');
     }
 
 
