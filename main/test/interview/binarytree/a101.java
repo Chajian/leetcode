@@ -10,36 +10,28 @@ import java.util.List;
 import java.util.Queue;
 
 /**
- * way:recursion
+ * way:recursion,MRL,MLR
  */
 public class a101 {
     LinkedList<TreeNode> list = new LinkedList<>();
     public boolean isSymmetric(TreeNode root) {
-        if(root!=null)
-            list.add(root);
-        while(list.size()>0) {
-            for (int i = 0, j = list.size() - 1; i < j; i++, j--) {
-                if (list.get(i) == null && list.get(j) == null) continue;
-                if (list.get(i) == null || list.get(j) == null) return false;
-                if (list.get(i).val != list.get(j).val)
-                    return false;
-            }
-            int size = list.size();
-            for (int i = 0; i < size; i++) {
-                TreeNode node = list.poll();
-                if (node == null) continue;
-                list.add(node.left);
-                list.add(node.right);
-            }
-        }
-        return true;
+        return isSymmetric(root.left,root.right);
+    }
+
+    public boolean isSymmetric(TreeNode left,TreeNode right){
+        if(left==null&&right==null)return true;
+        if(left==null||right==null)
+            return false;
+        if(left.val!=right.val)
+            return false;
+        return isSymmetric(left.right,right.left)&&isSymmetric(left.left,right.right);
     }
 
 
     @Test
     public void test(){
         Binary binary = new Binary();
-        TreeNode root = binary.ganerateTreeByLevel(new Integer[]{1,2,2,3,4,4,3});
+        TreeNode root = binary.ganerateTreeByLevel(new Integer[]{1,2,2,null,3,null,3});
         System.out.println(isSymmetric(root));
     }
 
