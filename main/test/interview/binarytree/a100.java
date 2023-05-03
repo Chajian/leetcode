@@ -1,6 +1,7 @@
 package interview.binarytree;
 
 import com.sun.source.tree.Tree;
+import entity.TreeNode;
 
 import java.util.LinkedList;
 import java.util.Queue;
