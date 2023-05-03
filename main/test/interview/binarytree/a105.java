@@ -7,35 +7,32 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
- * way: recursion
+ * way: unknow
+ * author: StefanPochmann
  */
 public class a105 {
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        Deque<TreeNode> deque = new ArrayDeque();
-        TreeNode root = new TreeNode(preorder[0]);
-        deque.push(root);
-        for(int i = 1 ,j=0; i < preorder.length ;i++){
-            TreeNode node = new TreeNode(preorder[i]);
-            if(deque.size()<1||inorder[j]!=deque.peek().val){
-                deque.peek().left = node;
-            }
-            else{
-                TreeNode treeNode = null;
-                while(deque.size()>0&&deque.peek().val==inorder[j]){
-                    treeNode = deque.pop();
-                    j++;
-                }
-                treeNode.right = node;
-            }
-            deque.push(node);
-        }
-        return root;
+        return buildTreeHelper(preorder,  inorder, (long)Integer.MAX_VALUE + 1);
     }
+
+    int pre = 0,in = 0;
+    public TreeNode buildTreeHelper(int[] preorder, int[] inorder,long stop){
+        if(pre>=preorder.length) return null;
+        if(inorder[in] == stop){
+            in++;
+            return null;
+        }
+        TreeNode node = new TreeNode(preorder[pre++]);
+        node.left = buildTreeHelper(preorder,inorder,node.val);
+        node.right = buildTreeHelper(preorder,inorder,stop);
+        return node;
+    }
+
 
     @Test
     public void test(){
-        TreeNode treeNode = buildTree(new int[]{3,9,20,15,7},new int[]{9,3,15,20,7});
+        TreeNode treeNode = buildTree(new int[]{3,2,1,4},new int[]{1,2,3,4});
         System.out.println();
     }
 }
