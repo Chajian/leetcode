@@ -10,30 +10,23 @@ import java.util.Deque;
  * way: recursion
  */
 public class a106 {
-    Deque<TreeNode> deque = new ArrayDeque();
     int in = 0,po = 0;
     public TreeNode buildTree(int[] inorder, int[] postorder) {
-        po = postorder.length-1;
         in = inorder.length-1;
-        TreeNode root = new TreeNode(postorder[po--]);
-        deque.push(root);
-        while(po>=0){
-            TreeNode node = new TreeNode(postorder[po--]);
-            if(deque.size()>0&&deque.peek().val!=inorder[in]) {
-                deque.peek().right = node;
-                deque.push(node);
-            }
-            else{
-                TreeNode treeNode = null;
-                while(deque.size()>0&&deque.peek().val==inorder[in]) {
-                    treeNode = deque.pop();
-                    in--;
-                }
-                treeNode.left = node;
-                deque.push(node);
-            }
+        po = postorder.length-1;
+        return buildTree(inorder,postorder,Integer.MAX_VALUE-1);
+    }
+
+    public TreeNode buildTree(int[] inorder, int[] postorder,int stop) {
+        if(po<0)return null;
+        if(inorder[in]==stop){
+            in--;
+            return null;
         }
-        return root;
+        TreeNode treeNode = new TreeNode(postorder[po--]);
+        treeNode.right = buildTree(inorder,postorder,treeNode.val);
+        treeNode.left = buildTree(inorder,postorder,stop);
+        return treeNode;
     }
 
     @Test
