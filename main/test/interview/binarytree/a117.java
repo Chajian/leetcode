@@ -12,22 +12,24 @@ import java.util.LinkedList;
 
 public class a117 {
 
-    Deque<Node> deque = new ArrayDeque();
     public Node connect(Node root) {
-        if(root==null) return null;
-        deque.add(root);
-        while(deque.size()>0) {
-            int size = deque.size();
-            Node preNode = null;
-
-            for (int i = 0; i < size; i++) {
-                Node treeNode = deque.pop();
-                if (preNode != null)
-                    preNode.next = treeNode;
-                preNode = treeNode;
-                if (treeNode.left != null) deque.add(treeNode.left);
-                if (treeNode.right != null) deque.add(treeNode.right);
+        if(root==null)return null;
+        Node cur = root;
+        while(cur!=null){
+            Node dump = new Node(0);
+            Node pre = dump;
+            while(cur!=null){
+                if(cur.left!=null){
+                    pre.next = cur.left;
+                    pre = pre.next;
+                }
+                if(cur.right!=null){
+                    pre.next = cur.right;
+                    pre = pre.next;
+                }
+                cur = cur.next;
             }
+            cur = dump.next;
         }
         return root;
     }
