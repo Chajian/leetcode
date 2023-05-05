@@ -16,6 +16,8 @@ public class Binary {
      */
     List<TreeNode> linkedList = new ArrayList<>();
     public TreeNode ganerateTreeByLevel(Integer... nums){
+        if(nums.length<1)
+            return null;
         linkedList.add(new TreeNode(nums[0]));
         for(int i = 1 ; i < nums.length;i++){
             TreeNode node = null;

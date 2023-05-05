@@ -9,7 +9,6 @@ import java.util.*;
 
 public class a114 {
 
-    Stack<TreeNode> stack = new Stack<>();
     public void flatten(TreeNode root) {
 
         TreeNode cur = root,temp = null;
