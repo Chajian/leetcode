@@ -5,36 +5,28 @@ import entity.TreeNode;
 import org.junit.Test;
 import tools.Binary;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class a114 {
 
-
-    Queue<TreeNode> queue = new LinkedList();
+    Stack<TreeNode> stack = new Stack<>();
     public void flatten(TreeNode root) {
-        if(root==null)return;
 
-        addQueue(root);
-        TreeNode pre = null;
-        while(queue.size()>0){
-            TreeNode cur = queue.poll();
-            if(pre!=null) {
-                pre.right = cur;
-                pre.left = null;
+        TreeNode cur = root;
+        while(cur!=null) {
+            while (cur != null) {
+                if (cur.left != null) {
+                    if(cur.right!=null)
+                        stack.push(cur.right);
+                    cur.right = cur.left;
+                    cur.left = null;
+                }
+                if(cur.right==null&&stack.size()>0) {
+                    cur.right = stack.pop();
+                }
+                cur = cur.right;
             }
-            pre = cur;
         }
-    }
-
-    public void addQueue(TreeNode root) {
-        queue.add(root);
-        if(root.left!=null)
-            addQueue(root.left);
-        if(root.right!=null)
-            addQueue(root.right);
     }
 
     @Test
