@@ -5,13 +5,27 @@ import org.junit.Test;
 import tools.Binary;
 
 public class a112 {
+    boolean result = false;
     public boolean hasPathSum(TreeNode root, int targetSum) {
         if(root==null)return false;
-        if(root.val==targetSum&&root.left==null&&root.right==null)return true;
+        haspathSum(root,targetSum);
+        return result;
+    }
 
-        if(root.left!=null)root.left.val+=root.val;
-        if(root.right!=null)root.right.val+=root.val;
-        return hasPathSum(root.left,targetSum)||hasPathSum(root.right,targetSum);
+    public void haspathSum(TreeNode root,int targetSum){
+        if(root.val==targetSum&&root.left==null&&root.right==null){
+            result = true;
+            return;
+        }
+        if(root.left!=null) {
+            root.left.val += root.val;
+            haspathSum(root.left, targetSum);
+        }
+        if(root.right!=null){
+            root.right.val+=root.val;
+            haspathSum(root.right, targetSum);
+        }
+
     }
 
 
