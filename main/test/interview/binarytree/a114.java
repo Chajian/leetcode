@@ -12,20 +12,25 @@ public class a114 {
     Stack<TreeNode> stack = new Stack<>();
     public void flatten(TreeNode root) {
 
-        TreeNode cur = root;
-        while(cur!=null) {
-            while (cur != null) {
-                if (cur.left != null) {
-                    if(cur.right!=null)
-                        stack.push(cur.right);
-                    cur.right = cur.left;
-                    cur.left = null;
+        TreeNode cur = root,temp = null;
+        while (cur != null) {
+            if (cur.left != null) {
+                TreeNode rightest = cur.right;
+                while(rightest!=null&&rightest.right!=null){
+                    rightest = rightest.right;
                 }
-                if(cur.right==null&&stack.size()>0) {
-                    cur.right = stack.pop();
+                if(rightest!=null) {
+                    rightest.right = temp;
+                    temp = cur.right;
                 }
-                cur = cur.right;
+                cur.right = cur.left;
+                cur.left = null;
             }
+            if(cur.right==null&&temp!=null) {
+                cur.right = temp;
+                temp = null;
+            }
+            cur = cur.right;
         }
     }
 
