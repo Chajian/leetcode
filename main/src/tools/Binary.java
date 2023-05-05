@@ -1,5 +1,6 @@
 package tools;
 
+import entity.Node;
 import entity.TreeNode;
 
 import java.util.ArrayList;
@@ -30,6 +31,30 @@ public class Binary {
             linkedList.add(node);
         }
         return linkedList.get(0);
+    }
+
+    /**
+     * 层次遍历
+     * @param nums
+     * @return
+     */
+    List<Node> nodesList = new ArrayList<>();
+    public Node ganerateNodeByLevel(Integer... nums){
+        nodesList.add(new Node(nums[0]));
+        for(int i = 1 ; i < nums.length;i++){
+            Node node = null;
+            if(nums[i]!=null){
+                node = new Node(nums[i]);
+                int root = i%2==1?i/2:i/2-1;
+                if(i%2==1){
+                    nodesList.get(root).left=node;
+                }
+                else
+                    nodesList.get(root).right=node;
+            }
+            nodesList.add(node);
+        }
+        return nodesList.get(0);
     }
 
 
