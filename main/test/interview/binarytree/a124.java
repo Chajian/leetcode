@@ -13,9 +13,7 @@ public class a124 {
 
     public int calcul(TreeNode root){
         if(root==null)return 0;
-        int left = calcul(root.left),right = calcul(root.right),mostexcellent = root.val;
-        mostexcellent+=left;
-        mostexcellent+=right;
+        int left = calcul(root.left),right = calcul(root.right),mostexcellent = root.val+left+right;
         if(mostexcellent>max)
             max = mostexcellent;
         if(left>0||right>0)
