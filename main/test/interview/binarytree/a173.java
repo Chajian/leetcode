@@ -2,33 +2,30 @@ package interview.binarytree;
 
 import entity.TreeNode;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class a173 {
     class BSTIterator {
-        List<Integer> list = new ArrayList<>();
-        int point = 0,len = 0;
+        TreeNode root = new TreeNode(-1);
 
-        public void genarateList(TreeNode root){
-            if(root==null)return;
-            genarateList(root.left);
-            list.add(root.val);
-            genarateList(root.right);
-            point = 0;
+        public TreeNode next(TreeNode root,TreeNode pre){
+            if(root.left!=null)
+                return next(root.left,root);
+            else {
+                pre.left = root.right;
+                return root;
+            }
         }
-
         public BSTIterator(TreeNode root) {
-            genarateList(root);
-            len = list.size();
+            this.root.left = root;
         }
 
         public int next() {
-            return list.get(point++);
+            return next(root.left,root).val;
         }
 
         public boolean hasNext() {
-            return point<len;
+            return root.left!=null;
         }
     }
 
