@@ -4,15 +4,13 @@ import java.util.HashMap;
 
 public class Trie {
     TreeNodeChar root;
-    HashMap<String,Integer> map;
 
     public Trie() {
         root = new TreeNodeChar('/');
-        map = new HashMap<>();
     }
 
     public void insert(String word) {
-        map.put(word,1);
+        word+='.';
         TreeNodeChar cur = root.left,pre = root;
         for(char c : word.toCharArray()){
             if(cur==null){
@@ -36,7 +34,8 @@ public class Trie {
 
 
     public boolean search(String word) {
-        return map.get(word)!=null;
+        word+='.';
+        return startsWith(word);
     }
 
     public boolean startsWith(String prefix) {
