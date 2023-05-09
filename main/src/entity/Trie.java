@@ -13,15 +13,24 @@ public class Trie {
 
     public void insert(String word) {
         map.put(word,1);
-        TreeNodeChar cur = root;
+        TreeNodeChar cur = root.left,pre = root;
         for(char c : word.toCharArray()){
-            while(cur.right!=null&&cur.right.val!=c){
+            if(cur==null){
+                pre.left = new TreeNodeChar(c);
+                pre = pre.left;
+                cur = pre.left;
+                continue;
+            }
+            while(cur!=null&&cur.val!=c){
+                pre = cur;
                 cur = cur.right;
             }
-            if(cur.right==null){
-                cur.left = new TreeNodeChar(c);
-                cur = cur.left;
+            if(cur==null){
+                pre.right = new TreeNodeChar(c);
+                cur = pre.right;
             }
+            pre = cur;
+            cur = cur.left;
         }
     }
 
@@ -31,15 +40,14 @@ public class Trie {
     }
 
     public boolean startsWith(String prefix) {
-        TreeNodeChar cur = root;
+        TreeNodeChar cur = root.left;
 
         for(char c : prefix.toCharArray()){
-            while(cur.right!=null&&cur.right.val!=c){
+            while(cur!=null && cur.val != c){
                 cur = cur.right;
             }
-            if(cur.left==null||cur.left.val != c){
+            if(cur == null)
                 return false;
-            }
             cur = cur.left;
         }
         return true;
