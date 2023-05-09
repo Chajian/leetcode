@@ -3,54 +3,42 @@ package entity;
 import java.util.HashMap;
 
 public class Trie {
-    char val;
-    Trie left;
-    Trie right;
+    Trie[] tries;
+    boolean isEnd = false;
 
     public Trie() {
-
-    }
-
-    public Trie(char val){
-        this.val = val;
+        tries = new Trie[26];
     }
 
     public void insert(String word) {
-        Trie pre = this,cur = this.left;
+        Trie cur = this;
         for(int i = 0 ; i < word.length() ;i++){
             char c = word.charAt(i);
-            if(cur == null) {
-                pre.left = new Trie(c);
-                pre = pre.left;
-                continue;
-            }
-            while(cur != null && cur.val != c){
-                pre = cur;
-                cur = cur.right;
-            }
-            if(cur == null){
-                pre.right = new Trie(c);
-                cur = pre.right;
-            }
-            pre = cur;
-            cur = cur.left;
+            if(cur.tries[c-'a']==null)
+                cur.tries[c-'a'] = new Trie();
+            cur = cur.tries[c-'a'];
         }
+        cur.isEnd = true;
     }
 
     public boolean search(String word) {
-        word+='.';
-        return startsWith(word);
+        Trie cur = this;
+        for(int i = 0 ; i < word.length();i++){
+            char c = word.charAt(i);
+            if(cur.tries[c-'a']==null)
+                return false;
+            cur = cur.tries[c-'a'];
+        }
+        return cur.isEnd;
     }
 
     public boolean startsWith(String prefix) {
-        Trie cur = this.left;
+        Trie cur = this;
         for(int i = 0 ; i < prefix.length();i++){
             char c = prefix.charAt(i);
-            while(cur!=null&&cur.val!=c)
-                cur = cur.right;
-            if(cur == null)
+            if(cur.tries[c-'a']==null)
                 return false;
-            cur = cur.left;
+            cur = cur.tries[c-'a'];
         }
         return true;
     }
