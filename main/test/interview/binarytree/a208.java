@@ -15,7 +15,8 @@ public class a208 {
 
     @Test
     public void test() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        Reflection.executeLeetcode(List.of("","hotdog","hot"),List.of("Trie","insert","startsWith"));
+        Reflection<Trie> trieReflection = new Reflection<>();
+        trieReflection.executeLeetcode(List.of("","hotdog","hot"),List.of("Trie","insert","startsWith"),new Trie());
     }
 
 }
