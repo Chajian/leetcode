@@ -20,7 +20,8 @@ public class a211 {
 
     @Test
     public void testString(){
-        System.out.println(StringUtils.elimnateBracket("[],[\"at\"],[\"and\"],[\"an\"],[\"add\"],[\"a\"],[\".at\"],[\"bat\"],[\".at\"],[\"an.\"],[\"a.d.\"],[\"b.\"],[\"a.d\"],[\".\"]"));
+        System.out.println((int)'a');
+//        System.out.println(StringUtils.elimnateBracket("[],[\"at\"],[\"and\"],[\"an\"],[\"add\"],[\"a\"],[\".at\"],[\"bat\"],[\".at\"],[\"an.\"],[\"a.d.\"],[\"b.\"],[\"a.d\"],[\".\"]"));
     }
 
 }
