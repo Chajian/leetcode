@@ -2,7 +2,6 @@ package tools;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -36,7 +35,7 @@ public class Prime {
         return nums[a-'a'];
     }
 
-    public static long StringtoLongByAdd(List<Integer> nums,String a){
+    public static long StringtoLongByAdd(List<Integer> nums, String a){
         long l = 0;
         for(char c:a.toCharArray()){
             l+= (long)nums.get((c-'a'));
@@ -44,7 +43,7 @@ public class Prime {
         return l;
     }
 
-    public static long StringtoLongByMultiply(List<Integer> nums,String a){
+    public static long StringtoLongByMultiply(List<Integer> nums, String a){
         long l = 1;
         for(char c:a.toCharArray()){
             l*= (long)nums.get((c-'a'));

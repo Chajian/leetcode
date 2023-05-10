@@ -1,7 +1,5 @@
 package tools;
 
-import entity.Trie;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -9,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Reflection<T> {
-    public void executeLeetcode(List<String> input, List<String> methods,T t) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public void executeLeetcode(List<String> input, List<String> methods, T t) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
         /**
          * 第一步： 初始化一个Object[]数组
