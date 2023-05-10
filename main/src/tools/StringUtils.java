@@ -15,6 +15,14 @@ public class StringUtils {
         return stringBuilder.toString();
     }
 
+    public static String middleBracketToLarge(String source){
+        return source.replaceAll("\\[","{").replaceAll("]","}");
+    }
+
+    public static String doubleDotToSingleDot(String source){
+        return source.replaceAll("\"","'");
+    }
+
     public static List<String> elimnateBracket(List<String> sources){
         List<String> list = new ArrayList<>();
         for(String s:sources){
@@ -22,7 +30,5 @@ public class StringUtils {
         }
         return list;
     }
-
-
 
 }
