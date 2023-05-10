@@ -8,47 +8,47 @@ import java.util.HashMap;
 import java.util.List;
 
 public class a79 {
-    char[][] paths;
+    char[] key;
+    int len;
     public boolean exist(char[][] board, String word) {
-        List<List<Integer>> lists = new ArrayList<>();
         char startc = word.charAt(0);
-        paths = new char[board.length][board[0].length];
+        key = word.toCharArray();
+        len = word.length();
         for(int i = 0 ; i < board.length ;i++){
             for(int j = 0;j<board[i].length;j++){
-                if(board[i][j]==startc&&move(board,word,i,j))
+                if(move(board,i,j,0))
                     return true;
             }
         }
         return false;
     }
-    public boolean move(char[][]board,String word,int i,int j){
-        if(word.length()<=0)
+    public boolean move(char[][]board,int i,int j,int index){
+        if(index>=len)
             return true;
-        if(i<0||i>=board.length||j<0||j>=board[i].length||paths[i][j]==1)
+        if(i<0||i>=board.length||j<0||j>=board[i].length||board[i][j]!=key[index])
             return false;
-        if(board[i][j] == word.charAt(0)) {
-            paths[i][j]=1;
-            String newWord = word.substring(1, word.length());
-            if(move(board, newWord, i , j + 1))return true;
-            if(move(board,newWord,i,j-1))return true;
-            if(move(board,newWord,i+1,j))return true;
-            if(move(board,newWord,i-1,j))return true;
+        else {
+            board[i][j]+=100;
+            index++;
+            if(move(board, i+1 , j,index))return true;
+            if(move(board,i-1,j,index))return true;
+            if(move(board,i,j+1,index))return true;
+            if(move(board,i,j-1,index))return true;
+            board[i][j]-=100;
+            return false;
         }
-        paths[i][j]=0;
-        return false;
     }
 
     @Test
     public void test(){
 
-        System.out.println(exist(new char[][]{{'A','B','C','E'},{'S','F','E','S'},{'A','D','E','E'}
-                }
-                ,"ABCESEEEFS"));
+        System.out.println(exist(new char[][]{{'C','A','A'},{'A','A','A'},{'B','C','D'}}
+                ,"AAB"));
     }
 
     @Test
     public void changeString(){
-        String s = StringUtils.middleBracketToLarge("[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"E\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]");
+        String s = StringUtils.middleBracketToLarge("[[\"C\",\"A\",\"A\"],[\"A\",\"A\",\"A\"],[\"B\",\"C\",\"D\"]]");
         s = StringUtils.doubleDotToSingleDot(s);
         System.out.println(s);
     }
