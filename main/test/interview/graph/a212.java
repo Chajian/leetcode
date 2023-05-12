@@ -12,22 +12,23 @@ public class a212 {
     int[] map = new int[26];
     List<String> listWords = new ArrayList<>();
     int n,m;
-    int[][] path;
+    char[][] path,board;
     public List<String> findWords(char[][] board, String[] words) {
         n = board.length;
         m = board[0].length;
-        path = new int[n][m];
+        path = new char[n][m];
+        this.board = board;
         for(String s:words){
             map[s.charAt(0)-'a'] += 1;
             set.add(s);
         }
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder(10);
         for(int i = 0 ; i < board.length;i++){
             for(int j = 0 ; j < board[0].length;j++){
                 if(map[board[i][j]-'a']>0){
                     stringBuilder.append(board[i][j]);
                     path[i][j] = 1;
-                    move(board,i,j,stringBuilder,10);
+                    move(i,j,stringBuilder);
                     path[i][j] = 0;
                     stringBuilder.deleteCharAt(stringBuilder.length() - 1);
                 }
@@ -36,11 +37,12 @@ public class a212 {
         return listWords;
     }
 
-    public void move(char[][] board,int i,int j,StringBuilder sb,int depth){
-        if(sb.length()>depth)
+    public void move(int i,int j,StringBuilder sb){
+        if(sb.length()>10)
             return;
         if(set.contains(sb.toString())){
             listWords.add(sb.toString());
+            map[sb.toString().charAt(0)-'a']-=1;
             set.remove(sb.toString());
         }
         for(int t = 0 ; t < atc.length ;t++){
@@ -49,13 +51,11 @@ public class a212 {
                 continue;
             sb.append(board[di][dj]);
             path[di][dj] = 1;
-            move(board,i+atc[t][0],j+atc[t][1],sb,depth);
+            move(i+atc[t][0],j+atc[t][1],sb);
             sb.deleteCharAt(sb.length() - 1);
             path[di][dj] = 0;
         }
-
     }
-
 
 
     @Test
