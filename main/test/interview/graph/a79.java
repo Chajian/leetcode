@@ -1,4 +1,4 @@
-package interview.binarytree;
+package interview.graph;
 
 import org.junit.Test;
 import tools.StringUtils;
