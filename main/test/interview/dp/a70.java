@@ -1,12 +1,16 @@
 package interview.dp;
 
+import org.junit.Test;
+
 public class a70 {
     public int climbStairs(int n) {
-        short[] dp = new short[n+1];
-        dp[0] = 1;dp[1] = 1;
-        for(short i = 2; i <= n ;i++){
-            dp[i] = (short) (dp[i-1]+dp[i-2]);
-        }
-        return dp[n];
+        double sqrt5 = Math.sqrt(5);
+        double fibn = Math.pow((1 + sqrt5) / 2, n + 1) - Math.pow((1 - sqrt5) / 2, n + 1);
+        return (int) Math.round(fibn / sqrt5);
+    }
+
+    @Test
+    public void test(){
+        System.out.println(climbStairs(5));
     }
 }
