@@ -7,36 +7,50 @@ import java.util.HashSet;
 import java.util.List;
 
 public class a139 {
+    HashSet<String> set = new HashSet<>();
+    int maxlen = -1,minlen = 999;
+    StringBuilder stringBuilder = new StringBuilder();
+    // DFS
     public boolean wordBreak(String s, List<String> wordDict) {
-        boolean[] dp = new boolean[s.length()+1];
-        HashSet<String> set = new HashSet<>();
-        int n = s.length();
-        int maxWorld = 0;
-        int minWorld = 999;
-        for(String ss:wordDict){
-            set.add(ss);
-            if(ss.length()>maxWorld)
-                maxWorld = ss.length();
-            if(ss.length()<minWorld)
-                minWorld = ss.length();
+        boolean[] visited = new boolean[s.length() + 1];
+        stringBuilder.append(s);
+        for(String s1:wordDict){
+            set.add(s1);
+            if(s1.length()>maxlen)
+                maxlen = s1.length();
+            if(s1.length()<minlen)
+                minlen = s1.length();
         }
+        return dfs(s,0,wordDict,visited);
+    }
 
-
-        dp[0] = true;
-        for(int i = 1; i <= n;i++){
-            for(int j = i<=maxWorld?0:i-maxWorld; j <= i-minWorld&&!dp[i];j++) {
-                String sub = s.substring(j, i);
-                if (set.contains(sub)) dp[i] = dp[j];
-            }
-            if(dp[n])
+    public boolean dfs(String s,int index,List<String> wordDict,boolean[] visited){
+        if(index==s.length()&&visited[s.length()])
+            return true;
+        if(index>s.length()||stringBuilder.length()>maxlen)
+            return false;
+        stringBuilder.append(s.charAt(index));
+        boolean result = false;
+        String cache = stringBuilder.toString();
+        if(set.contains(stringBuilder.toString())){
+            visited[index] = true;
+            stringBuilder.delete(0,stringBuilder.length());
+            if(dfs(s,index+1,wordDict,visited))
                 return true;
         }
-        return false;
+        stringBuilder.append(cache);
+        result = dfs(s,index+1,wordDict,visited);
+        visited[index] = false;
+        return result;
     }
+
+
+
 
     @Test
     public void test(){
-        System.out.println(wordBreak("aaaaaaa", Arrays.asList(new String[]{"aaaa","aaa"})));
+        boolean result = wordBreak("aebbbbs", Arrays.asList(new String[]{"a","aeb","ebbbb","s","eb"}));
+        System.out.println(result);
     }
 
 }
