@@ -5,65 +5,61 @@ import org.junit.Test;
 import java.util.*;
 
 /**
- * DFS时间复杂度过高
- * 加上记忆回溯试试
+ *
+ * BFS+Memory
  */
 public class a139 {
-    HashSet<String> set = new HashSet<>();
-    int maxlen = -1,minlen = 999;
-    StringBuilder stringBuilder = new StringBuilder();
-    Map<Integer,Map<String,Boolean>> memory = new HashMap<>();
-    // DFS
+    Set<String> set;
+    Stack<List<Integer>> stack;
+    Map<Integer,Map<Integer,Boolean>> memory;
+    int n,minle=999,maxlen=-1;
     public boolean wordBreak(String s, List<String> wordDict) {
-        boolean[] visited = new boolean[s.length()];
+        n = s.length();
+        set = new HashSet<>();
+        stack = new Stack<>();
+        memory = new HashMap<>();
         for(String s1:wordDict){
             set.add(s1);
             if(s1.length()>maxlen)
                 maxlen = s1.length();
-            if(s1.length()<minlen)
-                minlen = s1.length();
+            if(s1.length()<minle)
+                minle = s1.length();
         }
-        return dfs(s,0,visited);
-    }
-
-    public boolean dfs(String s,int index,boolean[] visited){
-        if(index==s.length()&&visited[s.length()-1])
+        if(bfs(s,0,1))
             return true;
-        if(index>=s.length()||stringBuilder.length()>maxlen)
-            return false;
-        if(memory.get(index)!=null&&memory.get(index).get(stringBuilder.toString())!=null){
-            return memory.get(index).get(stringBuilder.toString());
-        }
-
-        if(memory.get(index)==null)
-            memory.put(index,new HashMap<>());
-        stringBuilder.append(s.charAt(index));
-        boolean result = false;
-        String cache = "";
-        if(set.contains(stringBuilder.toString())){
-            visited[index] = true;
-            cache = stringBuilder.toString();
-            stringBuilder.delete(0,stringBuilder.length());
-            result = dfs(s,index+1,visited);
-            memory.get(index).put(stringBuilder.toString(),result);
-            if(result)
+        while(stack.size()>0){
+            List<Integer> list = stack.pop();
+            if(bfs(s,list.get(0),list.get(1)))
                 return true;
         }
-        stringBuilder.append(cache);
-        result = dfs(s,index+1,visited);
-        memory.get(index).put(stringBuilder.toString(),result);
-        visited[index] = false;
-        if(stringBuilder.length()>0)
-        stringBuilder.deleteCharAt(stringBuilder.length()-1);
+        return false;
+    }
+
+
+    public boolean bfs(String s,int start,int end){
+        if(start==n)
+            return true;
+        if(end-start>maxlen||start>=n||end>n){
+            return false;
+        }
+        if(memory.get(start)!=null&&memory.get(start).get(end)!=null)
+            return memory.get(start).get(end);
+        String s1 = s.substring(start,end);
+        if(set.contains(s1)){
+            stack.push(List.of(end,end+minle));
+        }
+        if(memory.get(start)==null)
+            memory.put(start,new HashMap<>());
+        boolean result = bfs(s,start,end+1);
+        memory.get(start).put(end+1,result);
         return result;
     }
 
 
 
-
     @Test
     public void test(){
-        boolean result = wordBreak("leetcode", Arrays.asList(new String[]{"leet","code"}));
+        boolean result = wordBreak("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab", Arrays.asList(new String[]{"a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"}));
         System.out.println(result);
     }
 
