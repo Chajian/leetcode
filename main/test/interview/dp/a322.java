@@ -2,31 +2,50 @@ package interview.dp;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class a322 {
 
+    int res = Integer.MAX_VALUE;
+    Map<Integer,Map<Integer,Integer>> memory;
     public int coinChange(int[] coins, int amount) {
-        int[] dp = new int[amount+1];
-        dp[0] = 0;
-        for(int i = 1 ; i <= amount ; i++){
-            int min = Integer.MAX_VALUE;
-            for(int j = 0; j < coins.length ;j++){
-                if(i-coins[j]>=0&&dp[i-coins[j]]<min) {
-                    min = dp[i-coins[j]]+1;
-                }
-                dp[i] = min;
-            }
+        if(coins.length == 0){
+            return -1;
         }
-        return dp[amount]==Integer.MAX_VALUE?-1:dp[amount];
+        memory = new HashMap<>();
+
+        findWay(coins,amount,0);
+
+        // 如果没有任何一种硬币组合能组成总金额，返回 -1。
+        if(res == Integer.MAX_VALUE){
+            return -1;
+        }
+        return res;
+    }
+
+    public void findWay(int[] coins,int amount,int count){
+        if(amount < 0){
+            return;
+        }
+        if(amount == 0){
+            res = Math.min(res,count);
+            if(memory.get(amount)==null)
+                memory.put(amount,new HashMap<>());
+            memory.get(amount).put(count,res);
+        }
+        if(memory.get(amount)!=null&&memory.get(amount).get(count)!=null) {
+            res = memory.get(amount).get(count);
+            return;
+        }
+
+        for(int i = 0;i < coins.length;i++){
+            findWay(coins,amount-coins[i],count+1);
+        }
     }
 
 
     @Test
     public void test(){
-        System.out.println(coinChange(new int[]{186,419,83,408},6249));
+        System.out.println(coinChange(new int[]{1,2,5},11));
     }
 }
