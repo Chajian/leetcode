@@ -5,36 +5,34 @@ import org.junit.Test;
 import java.util.*;
 
 public class a1049 {
-    Map<Integer,Map<Integer,Integer>> memory = new HashMap<>();
+    int dp[][];
     public int lastStoneWeightII(int[] stones) {
         int sum = 0;
         for(int i = 0 ; i < stones.length ;i++){
             sum+=stones[i];
         }
+        dp = new int[stones.length][sum+1];
         int target =sum/2;
             return Math.abs(sum-2*add(stones,0,0,target));
     }
 
     public int add(int[] stones,int i,int num,int target){
-        if(i>=stones.length)
+        if(i>=stones.length||num==target)
             return num;
 
-        if(memory.get(i)==null)
-            memory.put(i,new HashMap<>());
         int next = 0,source = 0;
-        if(memory.get(i).get(num+stones[i])==null) {
+        if(dp[i][num+stones[i]]==0){
             next = add(stones, i + 1, num + stones[i], target);
-            memory.get(i).put(num+stones[i],next);
+            dp[i][num+stones[i]] = next;
         }
         else
-            next = memory.get(i).put(num+stones[i],next);
-
-        if(memory.get(i).get(num)==null) {
+            next = dp[i][num+stones[i]];
+        if(dp[i][num]==0){
             source = add(stones, i + 1, num, target);
-            memory.get(i).put(num,source);
+            dp[i][num] = source;
         }
         else
-            source = memory.get(i).put(num,next);
+            source = dp[i][num];
 
         if(Math.abs(target-next)<=Math.abs(target-source))
             return next;
