@@ -2,6 +2,8 @@ package tools;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StringUtils {
 
@@ -29,6 +31,18 @@ public class StringUtils {
             list.add(elimnateBracket(s));
         }
         return list;
+    }
+
+    public static String wipeOutPosition(String fieldType){
+        String rule = "\\(\\d+\\)";
+        return fieldType.replaceAll(rule,"");
+    }
+
+    public static boolean hasPosition(String fieldType){
+        String rule = "\\(\\d+\\)";
+        Pattern pattern = Pattern.compile(rule);
+        Matcher matcher = pattern.matcher(fieldType);
+        return matcher.matches();
     }
 
 }
