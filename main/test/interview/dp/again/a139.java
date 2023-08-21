@@ -2,48 +2,53 @@ package interview.dp.again;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class a139 {
-
     Set<String> set;
-    int[] dp;
+    Map<Integer, Map<Integer,Boolean>> memory;
+    int maxlen= -1;
 
     public boolean wordBreak(String s, List<String> wordDict) {
         set = new HashSet<>();
-        for(String word:wordDict)
+        memory = new HashMap<>();
+        for(String word:wordDict) {
+            maxlen = word.length()>maxlen?word.length():maxlen;
             set.add(word);
-        char[] chars = s.toCharArray();
-        StringBuilder stringBuilder = new StringBuilder();
-        for(int i = 0 ; i < s.length() ;i++){
-            stringBuilder.append(chars[i]);
-            if(dfs(chars,0,stringBuilder));
         }
-        return false;
+        return f(s,0,0);
+
     }
 
-    public boolean dfs(char[] chars,int start,StringBuilder stringBuilder){
-        if(stringBuilder.length()>= chars.length)return false;
-        int cur = set.contains(stringBuilder.toString())?stringBuilder.length():start;
-        int len = stringBuilder.length();
-        for(int i = start+1;i < chars.length;i++){
-            stringBuilder.append(chars[i]);
-            if(dfs(chars,start+1,stringBuilder))return true;
-            if(set.contains(stringBuilder.substring(cur,i+1)))cur = i+1;
-        }
-        stringBuilder.delete(len,stringBuilder.length());
-        return cur == chars.length;
-    }
+    public boolean f(String s,int i,int j){
+        if(i>=s.length()||j>=s.length()||i-j>maxlen)
+            return false;
+        if(memory.get(i)==null)
+            memory.put(i,new HashMap<>());
+        if(memory.get(i).get(j)!=null)
+            return memory.get(i).get(j);
 
+        if(set.contains(s.substring(i,j+1))){
+            if(j==s.length()-1)
+                return true;
+            if(memory.get(j+1)==null)
+                memory.put(j+1,new HashMap<>());
+            boolean result = f(s,j+1,j+1);
+            memory.get(j+1).put(j+1,result);
+            if (result)return true;
+        }
+        boolean result = f(s,i,j+1);
+        memory.get(i).put(j+1,result);
+        return result;
+    }
 
     @Test
     public void test(){
-        System.out.println(wordBreak("aebbbbs",List.of("a","aeb","ebbbb","s","eb")));
-
+        System.out.println(wordBreak("leetcode",List.of(new String[]{"leet","code"})));
+        System.out.println(wordBreak("applepenapple",List.of(new String[]{"apple", "pen"})));
+        System.out.println(wordBreak("catsandog",List.of(new String[]{"cats", "dog", "sand", "and", "cat"})));
+        System.out.println(wordBreak("aaaaaaa",List.of(new String[]{"aaaa", "aaa"})));
+        System.out.println(wordBreak("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",List.of(new String[]{"a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"})));
     }
-
 
 }
