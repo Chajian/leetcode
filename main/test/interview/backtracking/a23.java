@@ -7,6 +7,11 @@ import tools.StringUtils;
 
 public class a23 {
 
+    /**
+     * 双指针实现
+     * @param lists
+     * @return
+     */
     public ListNode mergeKLists(ListNode[] lists) {
         if(lists.length==0)
             return null;
