@@ -52,7 +52,7 @@ public class ShaTest {
 
     @Test
     public void test() throws NoSuchAlgorithmException {
-        System.out.println(generateSHA1Hash("Hello"));
+        System.out.println(generateSHA1Hash("1"));
         System.out.println(generateSHA1Hash("Hello"));
         System.out.println(generateSHA1Hash("Hella"));
     }
@@ -61,7 +61,8 @@ public class ShaTest {
     public void test2() throws NoSuchAlgorithmException{
         System.out.println(generateSHA3Hash("AliceBob10015")+"\n"+generateSHA2Hash("Alice\"\"Bob\"\"100\"\"15").length());
         System.out.println(generateSHA3Hash("AliceBob10015"));
-        System.out.println(generateSHA2Hash("Hella"));
+        System.out.println(generateSHA2Hash("username=bob"));
+        System.out.println(generateSHA2Hash("username=bob || PADDING || &admin=true"));
     }
 
 

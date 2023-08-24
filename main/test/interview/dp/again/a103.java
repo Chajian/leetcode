@@ -29,11 +29,11 @@ public class a103 {
             else
                 dp[i] = dp[i]>time?time:dp[i];
         }
-        if(mount-coins[i]>=0) {
-            calcula(coins, i, mount - coins[i],time+1);
-            calcula(coins,i+1,mount-coins[i],time+1);
+        if(mount-coins[i]>=0) {;//选
+            calcula(coins, i, mount - coins[i],time+1);//接着选择自己
+            calcula(coins,i+1,mount-coins[i],time+1);//dfs
         }
-        calcula(coins,i+1,mount,time);
+        calcula(coins,i+1,mount,time);//不选
     }
 
 
@@ -77,7 +77,6 @@ public class a103 {
         System.out.println(coinChange(new int[]{1},2));
 
         System.out.println(coinChange(new int[]{186,419,83,408},6249));
-
         System.out.println(coinChange(new int[]{3,7,405,436},8839));
     }
 }
