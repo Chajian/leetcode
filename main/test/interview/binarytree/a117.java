@@ -1,6 +1,5 @@
 package interview.binarytree;
 
-import com.sun.source.tree.Tree;
 import entity.Node;
 import entity.TreeNode;
 import org.junit.Test;
