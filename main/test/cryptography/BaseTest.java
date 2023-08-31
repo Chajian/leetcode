@@ -80,5 +80,17 @@ public class BaseTest {
         }
     }
 
+    @Test
+    public void flipByte(){
+        int number = 0b101010; // Example number: 42 in binary
+        int positionToFlip = 3; // Flipping the 4th bit (0-based index)
+
+// Flip the bit at the specified position
+        int flippedNumber = number ^ (1 << positionToFlip);
+
+        System.out.println(Integer.toBinaryString(flippedNumber)); // Output: 100010
+
+    }
+
 
 }
