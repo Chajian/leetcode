@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.apache.commons.codec.binary.Base32;
 import org.apache.commons.codec.binary.Base64;
 
+import java.nio.ByteBuffer;
+
 /**
  * 编码测试
  * 测试Base16，32，64分别对char数组进行编码的结果
@@ -78,6 +80,12 @@ public class BaseTest {
         for(byte c:decodes){
             System.out.print(Integer.toBinaryString(c)+",");
         }
+    }
+
+    @Test
+    public void test(){
+        String s = "asdkfjsldkfadfdsf";
+        byte[] bytes = Base64.encodeBase64(s.getBytes());
     }
 
     @Test
