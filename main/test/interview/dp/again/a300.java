@@ -7,30 +7,20 @@ import java.util.Arrays;
 public class a300 {
     int[] memory;
     public int lengthOfLIS(int[] nums) {
-        memory = new int[nums.length];
+        int n = nums.length;
+        memory = new int[n];
         int max = Integer.MIN_VALUE;
-        Arrays.fill(memory,-1);
-        for(int i = 0 ; i < nums.length&&nums.length-i>max;i++){
-            max = Math.max(max,move(nums,i)+1);
+        for(int i = n-1 ; i >=0&&n-i>=max;i--){
+            memory[i] = 1;
+            for(int j = i+1;j<n&&n-memory[i]>=j;j++){
+                if(nums[i]<nums[j])
+                    memory[i] = Math.max(memory[j] + 1,memory[i]);
+            }
+            max = Math.max(max,memory[i]);
         }
         return max;
     }
 
-    public int move(int[]nums ,int i){
-        if(i>=nums.length)
-            return 0;
-        if(memory[i]!=-1)
-            return memory[i];
-
-        int max = Integer.MIN_VALUE;
-        for(int j = i+1; j < nums.length&&nums.length-j>max ;j++){
-            if(nums[j]<=nums[i])
-                continue;
-            max = Math.max(max,(move(nums,j)));
-        }
-        memory[i] = max == Integer.MIN_VALUE?0:max+1;
-        return memory[i];
-    }
 
     @Test
     public void test(){
