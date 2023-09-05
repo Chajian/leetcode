@@ -1,6 +1,8 @@
 package tools.hy;
 
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import tools.StringUtils;
 
@@ -206,7 +208,7 @@ public class FlinkSqlGenarator {
      * @param fieldCallBack 回调函数
      * @return 返回字符串
      */
-    public static String  generateFields(Sheet sheet,int rowindex,int endRow,int name,int type,FieldCallBack fieldCallBack){
+    public static String  generateFields(Sheet sheet, int rowindex, int endRow, int name, int type, FieldCallBack fieldCallBack){
         StringBuilder stringBuilder = new StringBuilder();
         for(;rowindex<=endRow;rowindex++){
             Row row = sheet.getRow(rowindex);
