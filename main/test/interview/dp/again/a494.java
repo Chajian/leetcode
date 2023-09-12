@@ -3,7 +3,9 @@ package interview.dp.again;
 import org.junit.Test;
 
 public class a494 {
+    int[] memory;
     public int findTargetSumWays(int[] nums, int target) {
+        memory = new int[nums.length];
         return dfs(nums,target,0,0);
     }
 
@@ -13,16 +15,15 @@ public class a494 {
                 return 1;
             return 0;
         }
-        sum+=nums[i];//add
-        int pos = dfs(nums,target,i+1,sum);
-        sum-=nums[i];//reback
-        sum-=nums[i];//reduce
-        int reduce = dfs(nums,target,i+1,sum);
-        return pos+reduce;
+        int pos = dfs(nums,target,i+1,sum+nums[i]);//add
+        int reduce = dfs(nums,target,i+1,sum-nums[i]);//reduce
+        memory[i] = pos+reduce;
+        System.out.print("["+i+"]："+memory[i]+"  ");
+        return memory[i];
     }
     @Test
     public void test(){
         System.out.println(findTargetSumWays(new int[]{1,1,1,1,1},3));
-        System.out.println(findTargetSumWays(new int[]{1},1));
+//        System.out.println(findTargetSumWays(new int[]{1,1,1,1,1,1},3));
     }
 }
