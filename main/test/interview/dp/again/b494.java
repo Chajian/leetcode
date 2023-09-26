@@ -1,25 +1,44 @@
 package interview.dp.again;
 
+import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 //记忆化搜索
 public class b494 {
-    int[] memory;
+
     public int findTargetSumWays(int[] nums, int target) {
-        memory = new int[nums.length];
-        return dfs(nums,target,0,0);
+        int sum = 0;
+        for(int num:nums) {
+            sum += num;
+        }
+        if(sum<Math.abs(target))return 0;
+        int[][] dp = new int[nums.length+1][2*sum+1];
+        dp[0][sum] = 1;
+        for(int i = 0 ; i < nums.length;i++){
+            for(int j = nums[i] ; j < 2*sum+1-nums[i];j++){
+                if(dp[i][j]!=0) {
+                    dp[i + 1][j + nums[i]] += dp[i][j];
+                    dp[i + 1][j - nums[i]] += dp[i][j];
+                }
+            }
+        }
+        return dp[nums.length][sum+target];
     }
 
-    public int dfs(int[] nums,int target,int i,int sum){
-        if(i==nums.length){
-            if(sum == target)
-                return 1;
-            return 0;
-        }
-        sum+=nums[i];//add
-        int pos = dfs(nums,target,i+1,sum);
-        sum-=nums[i];//reback
-        sum-=nums[i];//reduce
-        int reduce = dfs(nums,target,i+1,sum);
-        memory[i] = pos+reduce;
-        return pos+reduce;
+    @Test
+    public void test(){
+        System.out.println(findTargetSumWays(new int[]{1,1,1,1,1},3));
+        System.out.println(findTargetSumWays(new int[]{1,0},1));
+        System.out.println(findTargetSumWays(new int[]{1,0,0},1));
+        System.out.println(findTargetSumWays(new int[]{0,0,0,0,0,0,0,0,1},1));
+        System.out.println(findTargetSumWays(new int[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},0));
+        System.out.println(findTargetSumWays(new int[]{100},-200));
     }
+
+
+
+
 }
