@@ -2,9 +2,15 @@ package interview.dp;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public class a494 {
     int count = 0;
+    int max;
     public int findTargetSumWays(int[] nums, int target) {
+        Arrays.sort(nums);
+        for(int num:nums)
+            max+=num;
         add(nums,0,target,0);
         return count;
     }

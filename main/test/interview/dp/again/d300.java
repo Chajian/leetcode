@@ -2,25 +2,34 @@ package interview.dp.again;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-
-public class a300 {
-    int[] memory;
+public class d300 {
+    // Dynamic programming + Dichotomy.
     public int lengthOfLIS(int[] nums) {
-        int n = nums.length;
-        memory = new int[n];
-        int max = Integer.MIN_VALUE;
-        for(int i = n-1 ; i >=0&&n-i>=max;i--){
-            memory[i] = 1;
-            for(int j = i+1;j<n&&n-memory[i]>=j;j++){
-                if(nums[i]<nums[j])
-                    memory[i] = Math.max(memory[j] + 1,memory[i]);
-            }
-            max = Math.max(max,memory[i]);
+        if (nums == null || nums.length == 0) {
+            return 0;
         }
-        return max;
-    }
 
+        int[] tails = new int[nums.length];
+        int length = 0;
+
+        for (int num : nums) {
+            int left = 0, right = length;
+            while (left < right) {
+                int mid = left + (right - left) / 2;
+                if (tails[mid] < num) {
+                    left = mid + 1;
+                } else {
+                    right = mid;
+                }
+            }
+            tails[left] = num;
+            if (left == length) {
+                length++;
+            }
+        }
+
+        return length;
+    }
 
     @Test
     public void test(){
