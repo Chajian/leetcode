@@ -46,6 +46,8 @@ public class a322 {
 
     @Test
     public void test(){
+
         System.out.println(coinChange(new int[]{1,2,5},11));
+
     }
 }
