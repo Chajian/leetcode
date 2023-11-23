@@ -2,15 +2,16 @@ package interview.dp.multiple;
 
 import org.junit.Test;
 
-public class a121 {
+public class b121 {
     public int maxProfit(int[] prices) {
         int n = prices.length;
-        int[] dp = new int[n];
+        int dp = 0;
         int max = 0;
+        int profit = 0;
         for(int i = n-2 ; i >=0 ;i--){
-            int profit = prices[i+1]+dp[i+1]-prices[i];
-            dp[i]=profit>0?profit:0;
-            max=dp[i]>max?dp[i]:max;
+            profit = prices[i+1]+dp-prices[i];
+            dp=profit>0?profit:0;
+            max=dp>max?dp:max;
         }
         return max;
     }

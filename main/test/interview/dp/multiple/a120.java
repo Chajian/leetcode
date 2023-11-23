@@ -5,30 +5,25 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 自顶向下dp
+ */
 public class a120 {
     public int minimumTotal(List<List<Integer>> triangle) {
-        int res = triangle.get(0).get(0);
-        for(int i = 1 ; i < triangle.size();i++){
-            int min = Integer.MAX_VALUE;
-            for(int j = 0 ;j < triangle.get(i).size();j++){
-                int n;
-                if(j==0){
-                    n = triangle.get(i-1).get(0);
-                }
-                else if(j==triangle.get(i).size()-1)
-                    n = triangle.get(i-1).get(triangle.get(i).size()-2);
-                else {
-                    n = (triangle.get(i - 1).get(j - 1) > triangle.get(i - 1).get(j) ? triangle.get(i - 1).get(j) : triangle.get(i - 1).get(j - 1));
-                }
-                n = triangle.get(i).get(j)+n;
-                triangle.get(i).set(j,n);
-                if(n<min)
-                    min = n;
+        int len = triangle.size();
+        for(int i = 1 ; i < len;i++){
+            triangle.get(i).set(0,triangle.get(i-1).get(0)+triangle.get(i).get(0));
+            int size = triangle.get(i).size();
+            for(int j = 1 ;j < size-1;j++){
+                triangle.get(i).set(j,triangle.get(i).get(j)+Math.min(triangle.get(i - 1).get(j - 1),triangle.get(i - 1).get(j)));
             }
-            res = min;
+            triangle.get(i).set(size-1,triangle.get(i-1).get(size-2)+triangle.get(i).get(size-1));
         }
-
-        return res;
+        int min = Integer.MAX_VALUE;
+        for(int i = 0 ; i < triangle.get(len-1).size();i++){
+            min = Math.min(min,triangle.get(len-1).get(i));
+        }
+        return min;
     }
 
     @Test
@@ -75,5 +70,11 @@ public class a120 {
 
 
         System.out.println(minimumTotal(list));
+    }
+
+    @Test
+    public void test3(){
+        int a = Integer.MAX_VALUE;
+        System.out.println(a+1);
     }
 }
