@@ -30,6 +30,9 @@ public class b494 {
 
     @Test
     public void test(){
+        System.out.println(findTargetSumWays(new int[]{0,0,0},0));
+        System.out.println(findTargetSumWays(new int[]{1,1,1,1,1,0,0},3));
+        System.out.println(findTargetSumWays(new int[]{1,1,1,1,1,1},3));
         System.out.println(findTargetSumWays(new int[]{1,1,1,1,1},3));
         System.out.println(findTargetSumWays(new int[]{1,0},1));
         System.out.println(findTargetSumWays(new int[]{1,0,0},1));
