@@ -1,4 +1,4 @@
-package interview.dp.multiple;
+package interview.greed;
 
 import org.junit.Test;
 

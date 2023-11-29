@@ -1,4 +1,4 @@
-package interview.dp.multiple;
+package interview.greed;
 
 import org.junit.Test;
 
@@ -36,5 +36,10 @@ public class a55 {
     @Test
     public void test5(){
         System.out.println(canJump(new int[]{1,2}));
+    }
+
+    @Test
+    public void test6(){
+        System.out.println(canJump(new int[]{2,3,1,1,4}));
     }
 }
