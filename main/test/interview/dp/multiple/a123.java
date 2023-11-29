@@ -27,4 +27,6 @@ public class a123 {
     public void test2(){
         System.out.println(maxProfit(new int[]{2,1,4,5,2,9,7}));
     }
+
+
 }
