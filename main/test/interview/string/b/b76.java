@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class b76 {
     public String minWindow(String s, String t) {
-        int n = s.length(),left =0,right = 0,minLeft = 0,minRight = n;
+        int n = s.length(),left =0,right = 0,minLeft = 0,minRight = n-1;
         Map<Character,Integer> map = new HashMap<>();
         for(int i = 0 ; i < t.length();i++){
             int temp = map.getOrDefault(t.charAt(i),0);
@@ -19,6 +19,10 @@ public class b76 {
             if(map.get(c)!=null){
                 right=i;
                 map.put(c,map.get(c)-1);
+                if(check(map)&&(right-left)<(minRight-minLeft)&&check(map)){
+                    minLeft = left;
+                    minRight = right;
+                }
             }
             while(left<right&&(map.get(s.charAt(left))==null||map.get(s.charAt(left))<0)){
                 if(map.get(s.charAt(left))!=null){
@@ -67,4 +71,10 @@ public class b76 {
     public void test5(){
         System.out.println(minWindow("cabwefgewcwaefgcf","cae"));
     }
+
+    @Test
+    public void test6(){
+        System.out.println(minWindow("ab","a"));
+    }
 }
+
