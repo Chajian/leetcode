@@ -2,6 +2,9 @@ package interview.dp.multiple;
 
 import org.junit.Test;
 
+import java.lang.ref.Reference;
+import java.util.ArrayList;
+
 public class a122 {
     public int maxProfit(int[] prices) {
         int n = prices.length;

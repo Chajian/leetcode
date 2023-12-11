@@ -6,16 +6,14 @@ public class a45 {
     public int jump(int[] nums) {
         if(nums.length<=1)
             return 0;
-        int pointI = 0,pointJ=1,valI = nums[pointI],valJ=nums[pointJ],time = 1;
+        int pointI = 0,pointJ=1,time = 1;
         for(int i = 1 ; i < nums.length ;i++){
             if((i-pointI)-nums[pointI]>0){
                 pointI = pointJ;
                 time++;
             }
-            valJ--;
-            if(nums[i]>valJ){
+            if(nums[i]>nums[pointJ]-(i-pointJ)){
                 pointJ = i;
-                valJ = nums[i];
             }
         }
         return time;
