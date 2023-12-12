@@ -7,27 +7,24 @@ import java.util.Map;
 
 public class b76 {
     public String minWindow(String s, String t) {
-        int n = s.length(),left =0,right = 0,minLeft = 0,minRight = n-1,needLen = 0;
+        int n = s.length(),left =0,right = 0,minLeft = 0,minRight = n,needLen = t.length();
         boolean status = true;
         Map<Character,Integer> map = new HashMap<>();
-        for(int i = 0 ; i < t.length();i++){
-            int temp = map.getOrDefault(t.charAt(i),0);
-            map.put(t.charAt(i),temp+1);
-            needLen++;
-        }
+        for(int i = 0 ; i < t.length();i++)
+            map.put(t.charAt(i),map.getOrDefault(t.charAt(i),0)+1);
 
         while(left <n&&right<=n){
             if(status){
                 if(right>=n)
                     break;
                 char c = s.charAt(right++);
-                if(map.getOrDefault(c,Integer.MIN_VALUE)>=0){
+                if(map.getOrDefault(c,Integer.MIN_VALUE)>Integer.MIN_VALUE){
                     map.put(c,map.get(c)-1);
-                    if(needLen>0)
+                    if(needLen>0&&map.get(c)>=0)
                         needLen--;
                     if(needLen==0) {
                         status = false;
-                        if((right-left-1)<=(minRight-minLeft)){
+                        if((right-left)<=(minRight-minLeft)){
                             minRight = right;
                             minLeft = left;
                         }
@@ -55,12 +52,6 @@ public class b76 {
         if(needLen>0)
             return "";
         return s.substring(minLeft,minRight);
-    }
-    public boolean check(Map<Character,Integer> map){
-        for(int c:map.values())
-            if(c>0)
-                return false;
-        return true;
     }
 
     @Test
@@ -91,6 +82,21 @@ public class b76 {
     @Test
     public void test6(){
         System.out.println(minWindow("ab","a"));
+    }
+
+    @Test
+    public void test7(){
+        System.out.println(minWindow("acbbaca","aba"));
+    }
+
+    @Test
+    public void test8(){
+        System.out.println(minWindow("aaaaaaaaaaaabbbbbcdd","abcdd"));
+    }
+
+    @Test
+    public void test9(){
+        System.out.println(minWindow("acbdbaab","aabd"));
     }
 }
 
