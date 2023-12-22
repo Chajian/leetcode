@@ -1,4 +1,4 @@
-package interview.dp;
+package interview.greed;
 
 import org.junit.Test;
 
@@ -16,7 +16,6 @@ public class a134 {
             }
             else
                 current +=gas[i];
-
             cost[i]=cost[i-1]+gas[i];
         }
         if(current<0)
