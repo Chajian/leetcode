@@ -9,28 +9,47 @@ import java.util.List;
 
 //k个节点的组内逆排序
 public class kNodeReverse {
-    public ListNode verseNode(ListNode head,int k){
-        ListNode next=head.next,cur=head.next;
-        int i=k;
-        while(--i>=0&&next!=null){
-            if(i==0){
-                //逆转,接着再来
-                verse(cur,k);
-                cur.next=next;
-                cur=next;
+
+    //hh存放逆序后的头，tail存放一次逆序的wei尾
+ ListNode tail = null,hh = null;
+    //k个节点逆序
+    public void verseNode(ListNode head,int k){
+        ListNode left =head.next,right = head.next,stack = null;
+        int i = k;
+        while(right!=null){
+            if (--i == 0) {
+                right = right.next;
+                ListNode temp = verse(left,k);
+                if(stack != null){
+                    stack.next = tail;
+                }
+                stack=temp;
                 i=k;
+                left=right;
+                continue;
             }
-            next=next.next;
+            right = right.next;
         }
-        return head;
+        if(i!=0){
+            stack.next = left;
+        }
+
     }
 
     public ListNode verse(ListNode node,int k){
-        if(k==1)
-            return node.next;
-        ListNode next = verse(node.next,k-1);
-        next.next=node;
-        return node;
+        if (k==1) {
+            if(hh==null){
+                hh=node;
+            }
+            tail = node;
+            return node;
+        }
+        else{
+            ListNode temp = verse(node.next,k-1);
+            temp.next=node;
+            node.next=null;
+            return node;
+        }
     }
 
 
@@ -38,9 +57,10 @@ public class kNodeReverse {
     @Test
     public void test(){
         ListNode head = new ListNode();
-        head.next =  generateListFromIntegers(new int[]{1,2,3,4,5,6,7,8});
-        ListNode context = verseNode(head.next,4);
-        printNode(context);
+        //自动生存List单节点链表
+        head.next =  generateListFromIntegers(new int[]{1,2,3,4,5});
+        verseNode(head.next,2);
+        printNode(hh);
     }
 
     public ListNode generateListFromIntegers(int ...arrays){
