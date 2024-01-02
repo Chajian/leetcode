@@ -4,29 +4,20 @@ import org.junit.Test;
 
 public class a1599 {
     public int minOperationsMaxProfit(int[] customers, int boardingCost, int runningCost) {
-        int flat = 0,curcustomers = 0,increat = 0,n=customers.length,max=0;
-        int dp[] = new int[n+1];
-        for(int i = 0 ; i < customers.length;i++){
-            curcustomers+=customers[i];
-            increat+=customers[i];
+        int flat = 0,curcustomers = 0,n=customers.length,max=0,i=0,curprofit = 0;
+        while(i<n||curcustomers>0){
+            if(i<n) {
+                curcustomers += customers[i];
+            }
             int temp = Math.min(4,curcustomers);
             curcustomers-=temp;
-            System.out.println("当前轮次:"+flat+"剩余客人:"+curcustomers);
-            dp[i+1]=dp[i]+temp*boardingCost-runningCost;
-            if(dp[i+1]>max){
-                max=dp[i+1];
+            curprofit+=temp*boardingCost-runningCost;
+            if(curprofit>max){
+                max=curprofit;
                 flat = i+1;
             }
+            i++;
         }
-        int tempflat = curcustomers/4;
-        int temp = curcustomers%4;
-        int result = increat*boardingCost-(n+tempflat)*runningCost;
-        if(result>max){
-            flat = n+tempflat;
-            max = result;
-        }
-        if(temp*boardingCost>runningCost)
-            flat++;
         return max>0?flat:-1;
     }
 
